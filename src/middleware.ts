@@ -14,6 +14,7 @@ export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
   const role = req.auth?.user?.role;
+  console.log("[middleware-debug]", JSON.stringify({ path: nextUrl.pathname, isLoggedIn, auth: req.auth }));
 
   const isAdminRoute = nextUrl.pathname.startsWith("/admin");
   const isAuthRoute = AUTH_PAGES.includes(nextUrl.pathname);
