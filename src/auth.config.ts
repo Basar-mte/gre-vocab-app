@@ -7,6 +7,9 @@ import type { NextAuthConfig } from "next-auth";
  * Vercel's Edge Function size limit if bundled into middleware.
  */
 export const authConfig = {
+  secret: process.env.AUTH_SECRET,
+  trustHost: true,
+  session: { strategy: "jwt" },
   pages: {
     signIn: "/login",
   },
