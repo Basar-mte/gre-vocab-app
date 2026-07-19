@@ -10,17 +10,17 @@ A flashcard and exam web app for GRE vocabulary practice, with a student portal 
 
 - [Next.js 16](https://nextjs.org) (App Router, Server Actions) + TypeScript
 - [Tailwind CSS v4](https://tailwindcss.com)
-- [Prisma](https://www.prisma.io) — SQLite locally, Postgres in production
+- [Prisma](https://www.prisma.io) — Postgres (see "Local development" below for why SQLite was dropped)
 - [Auth.js / NextAuth v5](https://authjs.dev) — email+password (credentials) login, JWT sessions
 - [Zod](https://zod.dev) for validation, [PapaParse](https://www.papaparse.com) for CSV import
 
 ## Getting started (local development)
 
-Requires Node.js 20+.
+Requires Node.js 20+ and a Postgres connection string (the schema targets `postgresql` only — see below).
 
 ```bash
 npm install
-npm run db:seed     # creates the SQLite dev DB, demo accounts, and 3 sample sets
+npm run db:seed     # applies the schema and creates demo accounts + 3 sample sets
 npm run dev
 ```
 
@@ -33,7 +33,15 @@ Open [http://localhost:3000](http://localhost:3000). Demo accounts (also shown o
 
 Anyone can also self-register from `/register` — new accounts are created as students; promote them to admin from **Admin → Users**.
 
-The `.env` file is already set up for local SQLite (`DATABASE_URL="file:./dev.db"`). See `.env.example` for the variables needed in any environment.
+### Getting a local `DATABASE_URL`
+
+This project started on SQLite and switched to Postgres-only once it was deployed (Prisma only supports one datasource provider per schema, and Vercel's serverless filesystem can't persist a SQLite file). To develop locally:
+
+1. Open the Vercel dashboard → **gre-vocab-app-c8qg** project → **Settings → Environment Variables**.
+2. Copy the `DATABASE_URL` and `DATABASE_URL_UNPOOLED` values (from the connected Neon database) into your local `.env` yourself — paste them in directly rather than running `vercel env pull`, since some sandboxed environments scrub secret-shaped values written to disk by an agent.
+3. `.env` already has placeholders for both; see `.env.example`.
+
+This means local dev currently talks to the same Neon database as production. For a separate dev database, create a Neon branch (Neon dashboard → your project → Branches) and use its connection string locally instead.
 
 ## Loading your real word sets
 
@@ -72,31 +80,15 @@ src/app/(portal)/          Everything behind login: dashboard, flashcards, exam,
 
 ## Deploying
 
-The recommended path is **GitHub → Vercel**, with a hosted Postgres database (SQLite's local file won't persist on Vercel's serverless filesystem).
+Live at **<https://greasy.vercel.app>**, deployed via **GitHub → Vercel** with a Neon Postgres database (installed through Vercel's Storage tab, which wires up `DATABASE_URL` etc. automatically). Every push to `main` redeploys automatically through the Git integration.
 
-1. **Push to GitHub** (see below).
-2. **Create a Postgres database** — [Neon](https://neon.tech) or [Supabase](https://supabase.com) both have a free tier that works well with Vercel. Copy the connection string.
-3. **Switch the Prisma datasource to Postgres**:
-   - In `prisma/schema.prisma`, change `provider = "sqlite"` to `provider = "postgresql"` under `datasource db`.
-   - Regenerate migrations for Postgres (from an empty database, so this is a clean one-time step — see below).
-4. **Import to Vercel**: [vercel.com/new](https://vercel.com/new), select the GitHub repo.
-5. **Set environment variables** in the Vercel project settings:
-   - `DATABASE_URL` — your Postgres connection string
-   - `AUTH_SECRET` — generate one with `npx auth secret` or `openssl rand -base64 32`
-   - `NEXTAUTH_URL` — your production URL (e.g. `https://your-app.vercel.app`)
-6. Add `prisma migrate deploy` as part of the build (e.g. set the Vercel build command to `prisma migrate deploy && next build`, or add a `postinstall`/`vercel-build` script) so the schema is applied to the new database automatically.
-7. After the first deploy, run the seed script against production once (`DATABASE_URL=... npm run db:seed`) if you want the demo accounts there too — otherwise just register an account and promote it to admin directly in the production database, or via a one-off script.
+How it's wired up:
 
-### Regenerating migrations for Postgres
+- **Database**: Vercel project → **Storage** tab → Neon Postgres. This sets `DATABASE_URL` (pooled, used by the app at runtime) and `DATABASE_URL_UNPOOLED` (direct connection, used for schema pushes) as encrypted project env vars automatically.
+- **Schema sync**: there's no `prisma/migrations` folder — `vercel.json`'s `buildCommand` runs `prisma generate && prisma db push --accept-data-loss && prisma db seed && next build` on every deploy. `db push` and the seed script are both idempotent, so this is safe to run repeatedly, but it also means a destructive schema change (e.g. dropping a column with existing data) would apply without a confirmation prompt — fine for a small project, worth knowing before scaling this up.
+- **Auth**: `AUTH_SECRET` and `NEXTAUTH_URL` are set as project env vars (Production/Preview/Development). Generate a new secret with `npx auth secret` or `openssl rand -base64 32` if you ever need to rotate it.
 
-The migration history in `prisma/migrations/` was authored against SQLite. Since the production Postgres database starts empty, don't try to replay the SQLite migrations — instead generate one fresh "init" migration from the final schema once the datasource provider is switched to `postgresql`:
-
-```bash
-rm -rf prisma/migrations
-npx prisma migrate dev --name init   # against a fresh local/dev Postgres instance
-```
-
-Then `npx prisma migrate deploy` against the real production database applies that same migration.
+To redeploy manually instead of waiting for a push: `vercel --prod` (requires `vercel login` and `vercel link` once per machine).
 
 ## Known non-blocking items
 

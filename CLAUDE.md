@@ -2,7 +2,7 @@
 
 # Project: GREasy
 
-Next.js 16 (App Router) + TypeScript + Tailwind v4 + Prisma (SQLite locally, Postgres in production) + NextAuth v5 (Auth.js, credentials + JWT sessions).
+Next.js 16 (App Router) + TypeScript + Tailwind v4 + Prisma (Postgres via Neon, provisioned through Vercel's Storage tab) + NextAuth v5 (Auth.js, credentials + JWT sessions). Live at <https://greasy.vercel.app>, deployed via GitHub → Vercel (auto-deploys on push to `main`).
 
 - Student portal: flashcards and exams built from admin-managed vocabulary sets. Students pick sets (checkbox grid + free-form range like `1-5, 8`), shuffle, and a word count; exams add direction (word→meaning / meaning→word / mixed) and format (multiple choice / typed).
 - Admin portal (`/admin`, role-gated): CRUD for sets/words, CSV bulk import, user management, activity stats.
