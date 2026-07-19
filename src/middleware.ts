@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/auth";
+import NextAuth from "next-auth";
+import { authConfig } from "@/auth.config";
+
+// Deliberately built from the lightweight edge config, not `@/auth` — the
+// full config's Credentials provider pulls in bcryptjs + Prisma, which are
+// Node-only and would blow past Vercel's Edge Function size limit.
+const { auth } = NextAuth(authConfig);
 
 const PROTECTED_PREFIXES = ["/dashboard", "/flashcards", "/exam", "/history", "/admin"];
 const AUTH_PAGES = ["/login", "/register"];
