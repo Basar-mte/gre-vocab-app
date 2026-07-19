@@ -1,11 +1,5 @@
 import { NextResponse } from "next/server";
-import NextAuth from "next-auth";
-import { authConfig } from "@/auth.config";
-
-// Deliberately built from the lightweight edge config, not `@/auth` — the
-// full config's Credentials provider pulls in bcryptjs + Prisma, which are
-// Node-only and would blow past Vercel's Edge Function size limit.
-const { auth } = NextAuth(authConfig);
+import { auth } from "@/auth";
 
 const PROTECTED_PREFIXES = ["/dashboard", "/flashcards", "/exam", "/history", "/admin"];
 const AUTH_PAGES = ["/login", "/register"];
@@ -14,7 +8,6 @@ export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
   const role = req.auth?.user?.role;
-  console.log("[middleware-debug]", JSON.stringify({ path: nextUrl.pathname, isLoggedIn, auth: req.auth }));
 
   const isAdminRoute = nextUrl.pathname.startsWith("/admin");
   const isAuthRoute = AUTH_PAGES.includes(nextUrl.pathname);
