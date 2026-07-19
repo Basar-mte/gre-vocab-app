@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  STUDENT
+}
+
+enum ExamMode {
+  FLASHCARD
+  EXAM
+}
+
+enum ExamDirection {
+  TERM_TO_MEANING
+  MEANING_TO_TERM
+  MIXED
+}
+
+enum ExamFormat {
+  MULTIPLE_CHOICE
+  TYPED
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  passwordHash String
+  role         Role          @default(STUDENT)
+  createdAt    DateTime      @default(now())
+  attempts     ExamAttempt[]
+}
+
+model VocabSet {
+  id          String   @id @default(cuid())
+  number      Int      @unique
+  title       String
+  description String?
+  color       String? // hex color grade, optional, carried over from source sheet
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  words       Word[]
+
+  @@index([number])
+}
+
+model Word {
+  id            String   @id @default(cuid())
+  setId         String
+  set           VocabSet @relation(fields: [setId], references: [id], onDelete: Cascade)
+  term          String
+  meaning       String
+  partOfSpeech  String?
+  example       String?
+  synonyms      String?
+  difficulty    Int?     @default(0) // 0=normal, 1=hard, 2=easy - reserved for future spaced repetition
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  examAnswers   ExamAnswer[]
+
+  @@unique([setId, term])
+  @@index([term])
+}
+
+model ExamAttempt {
+  id             String        @id @default(cuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mode           ExamMode      @default(EXAM)
+  direction      ExamDirection @default(TERM_TO_MEANING)
+  format         ExamFormat    @default(MULTIPLE_CHOICE)
+  setNumbers     String // JSON-encoded array of set numbers included, e.g. "[1,2,5]"
+  requestedCount Int
+  totalQuestions Int           @default(0)
+  correctCount   Int           @default(0)
+  scorePercent   Float         @default(0)
+  startedAt      DateTime      @default(now())
+  completedAt    DateTime?
+  answers        ExamAnswer[]
+
+  @@index([userId])
+}
+
+model ExamAnswer {
+  id              String        @id @default(cuid())
+  attemptId       String
+  attempt         ExamAttempt   @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  wordId          String?
+  word            Word?         @relation(fields: [wordId], references: [id], onDelete: SetNull)
+  order           Int
+  direction       ExamDirection
+  termSnapshot    String
+  meaningSnapshot String
+  optionsJson     String? // JSON-encoded array of MCQ options, generated once and stored for consistency
+  userAnswer      String?
+  isCorrect       Boolean       @default(false)
+
+  @@index([attemptId])
+}
