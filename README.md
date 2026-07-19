@@ -1,4 +1,4 @@
-# GRE Vocabulary | Goldmine
+# GREasy
 
 A flashcard and exam web app for GRE vocabulary practice, with a student portal and an admin portal.
 
@@ -28,8 +28,8 @@ Open [http://localhost:3000](http://localhost:3000). Demo accounts (also shown o
 
 | Role    | Email                    | Password       |
 | ------- | ------------------------ | -------------- |
-| Admin   | `admin@goldmine.app`     | `admin1234`    |
-| Student | `student@goldmine.app`   | `student1234`  |
+| Admin   | `admin@greasy.app`       | `admin1234`    |
+| Student | `student@greasy.app`     | `student1234`  |
 
 Anyone can also self-register from `/register` — new accounts are created as students; promote them to admin from **Admin → Users**.
 

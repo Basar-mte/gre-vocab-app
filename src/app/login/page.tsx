@@ -13,9 +13,9 @@ export default async function LoginPage({
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
           <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-600 text-xl font-bold text-white">
-            GV
+            GE
           </div>
-          <h1 className="text-2xl font-bold text-brand-900">GRE Vocabulary | Goldmine</h1>
+          <h1 className="text-2xl font-bold text-brand-900">GREasy</h1>
           <p className="mt-1 text-sm text-brand-700/70">Flashcards &amp; exams for your word sets</p>
         </div>
 

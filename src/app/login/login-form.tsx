@@ -43,8 +43,8 @@ export default function LoginForm({ callbackUrl }: { callbackUrl?: string }) {
 
       <div className="rounded-lg border border-dashed border-brand-200 bg-brand-50/60 p-3 text-xs text-brand-700/80">
         <p className="font-semibold">Demo accounts</p>
-        <p>Admin: admin@goldmine.app / admin1234</p>
-        <p>Student: student@goldmine.app / student1234</p>
+        <p>Admin: admin@greasy.app / admin1234</p>
+        <p>Student: student@greasy.app / student1234</p>
       </div>
     </form>
   );

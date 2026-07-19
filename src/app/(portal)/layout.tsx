@@ -9,7 +9,7 @@ export default async function PortalLayout({ children }: { children: React.React
       <TopNav user={user} />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">{children}</main>
       <footer className="border-t border-brand-100 py-4 text-center text-xs text-brand-700/60">
-        GRE Vocabulary | Goldmine
+        GREasy
       </footer>
     </div>
   );

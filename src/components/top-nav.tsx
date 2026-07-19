@@ -20,9 +20,9 @@ export default function TopNav({
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
         <Link href="/dashboard" className="flex items-center gap-2 font-bold text-brand-800">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-sm text-white">
-            GV
+            GE
           </span>
-          <span className="hidden sm:inline">GRE Vocabulary | Goldmine</span>
+          <span className="hidden sm:inline">GREasy</span>
         </Link>
 
         <nav className="flex flex-1 items-center gap-1 overflow-x-auto">

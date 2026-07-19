@@ -1,6 +1,6 @@
 @AGENTS.md
 
-# Project: GRE Vocabulary | Goldmine
+# Project: GREasy
 
 Next.js 16 (App Router) + TypeScript + Tailwind v4 + Prisma (SQLite locally, Postgres in production) + NextAuth v5 (Auth.js, credentials + JWT sessions).
 

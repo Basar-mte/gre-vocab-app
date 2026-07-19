@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GRE Vocabulary | Goldmine",
+  title: "GREasy",
   description: "Flashcards and exams for GRE vocabulary practice",
 };
 
