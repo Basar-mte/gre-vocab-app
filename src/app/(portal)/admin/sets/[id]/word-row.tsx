@@ -16,7 +16,15 @@ type WordData = {
 
 const initialState: WordFormState = {};
 
-export default function WordRow({ word }: { word: WordData }) {
+export default function WordRow({
+  word,
+  selected,
+  onToggleSelected,
+}: {
+  word: WordData;
+  selected: boolean;
+  onToggleSelected: (id: string) => void;
+}) {
   const [editing, setEditing] = useState(false);
   const [state, formAction, pending] = useActionState(async (prevState: WordFormState, formData: FormData) => {
     const result = await updateWord(prevState, formData);
@@ -27,7 +35,7 @@ export default function WordRow({ word }: { word: WordData }) {
   if (editing) {
     return (
       <tr className="border-b border-brand-50 bg-brand-50/40 last:border-0">
-        <td colSpan={4} className="px-4 py-4">
+        <td colSpan={5} className="px-4 py-4">
           <form action={formAction} className="grid gap-3 sm:grid-cols-2">
             <input type="hidden" name="id" value={word.id} />
             <div>
@@ -74,7 +82,16 @@ export default function WordRow({ word }: { word: WordData }) {
   }
 
   return (
-    <tr className="border-b border-brand-50 last:border-0 hover:bg-brand-50/40">
+    <tr className={`border-b border-brand-50 last:border-0 hover:bg-brand-50/40 ${selected ? "bg-brand-50/60" : ""}`}>
+      <td className="px-4 py-3">
+        <input
+          type="checkbox"
+          className="h-4 w-4 accent-brand-600"
+          checked={selected}
+          onChange={() => onToggleSelected(word.id)}
+          aria-label={`Select ${word.term}`}
+        />
+      </td>
       <td className="px-4 py-3 font-semibold text-brand-900">{word.term}</td>
       <td className="px-4 py-3 text-brand-800">{word.meaning}</td>
       <td className="px-4 py-3 text-brand-700/70">{word.partOfSpeech ?? "—"}</td>

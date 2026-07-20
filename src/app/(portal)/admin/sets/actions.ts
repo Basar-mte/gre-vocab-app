@@ -53,6 +53,16 @@ export async function deleteSet(formData: FormData) {
   revalidatePath("/exam");
 }
 
+export async function deleteSets(ids: string[]): Promise<void> {
+  await requireAdmin();
+  if (ids.length === 0) return;
+
+  await prisma.vocabSet.deleteMany({ where: { id: { in: ids } } });
+  revalidatePath("/admin/sets");
+  revalidatePath("/flashcards");
+  revalidatePath("/exam");
+}
+
 const updateSetSchema = z.object({
   id: z.string().min(1),
   title: z.string().trim().min(1, "Title is required").max(120),

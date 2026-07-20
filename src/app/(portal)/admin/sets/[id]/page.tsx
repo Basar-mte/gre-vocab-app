@@ -3,7 +3,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import EditSetForm from "./edit-set-form";
 import AddWordForm from "./add-word-form";
-import WordRow from "./word-row";
+import WordsTable from "./words-table";
 
 export default async function AdminSetDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -39,38 +39,24 @@ export default async function AdminSetDetailPage({ params }: { params: Promise<{
         <AddWordForm setId={set.id} />
       </div>
 
-      <div className="card overflow-x-auto p-0">
-        {set.words.length === 0 ? (
-          <p className="p-6 text-sm text-brand-700/70">No words in this set yet. Add one above, or use CSV import.</p>
-        ) : (
-          <table className="w-full min-w-[720px] text-left text-sm">
-            <thead>
-              <tr className="border-b border-brand-100 text-brand-700/70">
-                <th className="px-4 py-3 font-medium">Term</th>
-                <th className="px-4 py-3 font-medium">Meaning</th>
-                <th className="px-4 py-3 font-medium">Part of speech</th>
-                <th className="px-4 py-3 font-medium" />
-              </tr>
-            </thead>
-            <tbody>
-              {set.words.map((word) => (
-                <WordRow
-                  key={word.id}
-                  word={{
-                    id: word.id,
-                    term: word.term,
-                    meaning: word.meaning,
-                    mnemonic: word.mnemonic,
-                    partOfSpeech: word.partOfSpeech,
-                    example: word.example,
-                    synonyms: word.synonyms,
-                  }}
-                />
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
+      {set.words.length === 0 ? (
+        <div className="card p-6">
+          <p className="text-sm text-brand-700/70">No words in this set yet. Add one above, or use CSV import.</p>
+        </div>
+      ) : (
+        <WordsTable
+          setId={set.id}
+          words={set.words.map((word) => ({
+            id: word.id,
+            term: word.term,
+            meaning: word.meaning,
+            mnemonic: word.mnemonic,
+            partOfSpeech: word.partOfSpeech,
+            example: word.example,
+            synonyms: word.synonyms,
+          }))}
+        />
+      )}
     </div>
   );
 }

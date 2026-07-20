@@ -74,3 +74,11 @@ export async function deleteWord(formData: FormData) {
   const word = await prisma.word.delete({ where: { id } });
   revalidatePath(`/admin/sets/${word.setId}`);
 }
+
+export async function deleteWords(setId: string, ids: string[]): Promise<void> {
+  await requireAdmin();
+  if (ids.length === 0) return;
+
+  await prisma.word.deleteMany({ where: { id: { in: ids }, setId } });
+  revalidatePath(`/admin/sets/${setId}`);
+}

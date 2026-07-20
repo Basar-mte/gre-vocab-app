@@ -155,8 +155,8 @@ export default function FlashcardViewer({
           K
         </div>
         <div className="mr-auto leading-[1.15]">
-          <h1 className="font-serif text-lg font-bold tracking-[.2px]">GRE Vocabulary Flashcards</h1>
-          <span className="text-[11px] uppercase tracking-[.14em] text-[#c9c5c1]">
+          <h1 className="font-serif text-xl font-bold tracking-[.2px]">GRE Vocabulary Flashcards</h1>
+          <span className="text-[12.5px] uppercase tracking-[.14em] text-[#c9c5c1]">
             Goldmine &middot; Word &middot; Mnemonic &middot; Meaning
           </span>
         </div>
@@ -194,9 +194,9 @@ export default function FlashcardViewer({
         </div>
       </header>
 
-      <main className="mx-auto flex w-full min-h-0 max-w-[860px] flex-1 flex-col items-center justify-center overflow-y-auto px-4 pb-8 pt-6">
-        <div className="mb-[18px] flex w-full items-center gap-3.5">
-          <span className="whitespace-nowrap text-[13px] font-semibold text-[#6e6a66]">
+      <main className="mx-auto flex w-full min-h-0 max-w-[1180px] flex-1 flex-col items-center justify-center overflow-y-auto px-6 pb-8 pt-6">
+        <div className="mb-[18px] flex w-full max-w-[820px] items-center gap-3.5">
+          <span className="whitespace-nowrap text-[14.5px] font-semibold text-[#6e6a66]">
             <b className="text-[color:var(--color-ink)]">{empty ? 0 : pos + 1}</b> / {order.length}
           </span>
           <div className="study-bar-track flex-1">
@@ -205,18 +205,18 @@ export default function FlashcardViewer({
               style={{ width: empty ? "0%" : `${((pos + 1) / order.length) * 100}%` }}
             />
           </div>
-          <span className="whitespace-nowrap text-[13px] font-semibold text-[#1e7b4d]">{known.size} known</span>
+          <span className="whitespace-nowrap text-[14.5px] font-semibold text-[#1e7b4d]">{known.size} known</span>
         </div>
 
         {empty ? (
-          <div className="mt-[60px] max-w-[420px] text-center text-[15px] leading-[1.7] text-[#6e6a66]">
+          <div className="mt-[60px] max-w-[460px] text-center text-[17px] leading-[1.7] text-[#6e6a66]">
             Every card here is marked as known. 🎉
             <br />
             Turn off <b>Review mode</b> to go through the set again.
           </div>
         ) : (
           <>
-            <div className="study-scene min-h-[420px] w-full max-w-[640px] flex-1 lg:min-h-[min(58dvh,600px)]">
+            <div className="study-scene min-h-[420px] w-full max-w-[820px] flex-1 lg:min-h-[min(60dvh,660px)]">
               <div
                 className={`study-cardflip h-full min-h-[420px] w-full ${flipped ? "flipped" : ""}`}
                 role="button"
@@ -230,21 +230,21 @@ export default function FlashcardViewer({
                   }
                 }}
               >
-                <div className="study-face front items-center justify-center px-[34px] py-14 text-center">
+                <div className="study-face front items-center justify-center px-[40px] py-16 text-center">
                   <span className="study-tab">#{serialMap.get(current.id)}</span>
                   <div>
                     <div className="mx-auto mb-[22px] h-[3px] w-[54px] bg-[color:var(--color-brand-500)]" />
-                    <div className="study-word text-[clamp(40px,8vw,66px)]">{current.term}</div>
-                    <div className="mt-4 text-xs uppercase tracking-[.2em] text-[#6e6a66]">
+                    <div className="study-word text-[clamp(48px,9vw,84px)]">{current.term}</div>
+                    <div className="mt-4 text-[13px] uppercase tracking-[.2em] text-[#6e6a66]">
                       Set {current.setNumber} &middot; {current.setTitle}
                     </div>
                   </div>
                   <span className="study-hint">Tap to reveal</span>
                 </div>
 
-                <div className="study-face back overflow-y-auto px-[34px] pb-[44px] pt-[52px]">
+                <div className="study-face back overflow-y-auto px-[40px] pb-[48px] pt-[56px]">
                   <span className="study-tab">#{serialMap.get(current.id)}</span>
-                  <div className="study-word mb-4 text-2xl">{current.term}</div>
+                  <div className="study-word mb-4 text-3xl">{current.term}</div>
 
                   <div className="mb-4">
                     <span className="study-eyebrow">Meaning</span>
@@ -267,9 +267,9 @@ export default function FlashcardViewer({
 
                   <div className="mb-[26px]">
                     <span className="study-eyebrow">Synonyms</span>
-                    <div className="flex flex-wrap gap-1.5">
+                    <div className="flex flex-wrap gap-2">
                       {synonymList.length === 0 ? (
-                        <span className="text-[13px] italic text-[#6e6a66]">— none listed —</span>
+                        <span className="text-[14.5px] italic text-[#6e6a66]">— none listed —</span>
                       ) : (
                         synonymList.map((s, i) => (
                           <span key={i} className="study-syn">
@@ -307,7 +307,7 @@ export default function FlashcardViewer({
               </button>
             </div>
 
-            <div className="mt-[18px] text-center text-[11.5px] tracking-[.04em] text-[#a29d98]">
+            <div className="mt-[18px] text-center text-[13px] tracking-[.04em] text-[#a29d98]">
               <kbd className="study-kbd">←</kbd> <kbd className="study-kbd">→</kbd> navigate &nbsp;&middot;&nbsp;{" "}
               <kbd className="study-kbd">Space</kbd> flip &nbsp;&middot;&nbsp; <kbd className="study-kbd">K</kbd> known
             </div>
@@ -315,7 +315,7 @@ export default function FlashcardViewer({
         )}
       </main>
 
-      <footer className="border-t border-[#e3dfda] px-[14px] py-3.5 text-center text-[11px] tracking-[.06em] text-[#a29d98]">
+      <footer className="border-t border-[#e3dfda] px-[14px] py-3.5 text-center text-[12.5px] tracking-[.06em] text-[#a29d98]">
         <b className="text-[color:var(--color-brand-500)]">GREasy</b> &middot; {setLabel} loaded
       </footer>
     </>
