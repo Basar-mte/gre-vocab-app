@@ -17,16 +17,19 @@ export default async function AdminOverviewPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="page-title text-2xl text-brand-900 md:text-3xl">Admin overview</h1>
-        <p className="mt-1 text-brand-700/70">Manage sets, words, users, and review activity.</p>
+      <div className="hero-band p-6 md:p-8">
+        <div className="relative">
+          <div className="hero-rule mb-3" />
+          <h1 className="page-title text-2xl md:text-3xl">Admin overview</h1>
+          <p className="mt-1 text-[#c9c5c1]">Manage sets, words, users, and review activity.</p>
+        </div>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Sets" value={setCount} />
-        <StatCard label="Words" value={wordCount} />
-        <StatCard label="Users" value={userCount} />
-        <StatCard label="Exams taken" value={attemptCount} />
+        <StatCard label="Sets" value={setCount} variant="dark" />
+        <StatCard label="Words" value={wordCount} variant="accent" />
+        <StatCard label="Users" value={userCount} variant="dark" />
+        <StatCard label="Exams taken" value={attemptCount} variant="accent" />
       </div>
 
       <div className="card p-6">
@@ -39,39 +42,41 @@ export default async function AdminOverviewPage() {
         {recentAttempts.length === 0 ? (
           <p className="text-sm text-brand-700/70">No exams taken yet.</p>
         ) : (
-          <table className="w-full min-w-[520px] text-left text-sm">
-            <thead>
-              <tr className="border-b border-[#e3dfda]">
-                <th className="table-head-cell">Student</th>
-                <th className="table-head-cell">Date</th>
-                <th className="table-head-cell">Sets</th>
-                <th className="table-head-cell">Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentAttempts.map((a) => (
-                <tr key={a.id} className="border-b border-[#f1eeea] last:border-0 hover:bg-[#f9f7f6]">
-                  <td className="px-4 py-2.5">{a.user.name}</td>
-                  <td className="px-4 py-2.5">{a.completedAt?.toLocaleDateString()}</td>
-                  <td className="px-4 py-2.5">{JSON.parse(a.setNumbers).join(", ")}</td>
-                  <td className="px-4 py-2.5 font-semibold text-brand-800">
-                    {a.correctCount}/{a.totalQuestions} ({Math.round(a.scorePercent)}%)
-                  </td>
+          <div className="overflow-hidden rounded-lg">
+            <table className="w-full min-w-[520px] text-left text-sm">
+              <thead className="table-ribbon">
+                <tr>
+                  <th className="table-head-cell">Student</th>
+                  <th className="table-head-cell">Date</th>
+                  <th className="table-head-cell">Sets</th>
+                  <th className="table-head-cell">Score</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {recentAttempts.map((a) => (
+                  <tr key={a.id} className="border-b border-[#f1eeea] last:border-0 hover:bg-[#f9f7f6]">
+                    <td className="px-4 py-2.5">{a.user.name}</td>
+                    <td className="px-4 py-2.5">{a.completedAt?.toLocaleDateString()}</td>
+                    <td className="px-4 py-2.5">{JSON.parse(a.setNumbers).join(", ")}</td>
+                    <td className="px-4 py-2.5 font-semibold text-[#D32C32]">
+                      {a.correctCount}/{a.totalQuestions} ({Math.round(a.scorePercent)}%)
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>
   );
 }
 
-function StatCard({ label, value }: { label: string; value: number }) {
+function StatCard({ label, value, variant }: { label: string; value: number; variant: "accent" | "dark" }) {
   return (
-    <div className="card p-5">
-      <div className="text-3xl font-extrabold text-brand-700">{value}</div>
-      <div className="text-sm text-brand-700/70">{label}</div>
+    <div className={`stat-tile ${variant === "accent" ? "card-accent" : "card-dark"}`}>
+      <div className="stat-value">{value}</div>
+      <div className="stat-label">{label}</div>
     </div>
   );
 }

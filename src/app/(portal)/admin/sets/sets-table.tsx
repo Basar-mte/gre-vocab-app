@@ -58,9 +58,9 @@ export default function SetsTable({ sets }: { sets: SetData[] }) {
   );
 
   return (
-    <div className="card overflow-x-auto p-0">
-      <div className="flex items-center justify-between gap-3 border-b border-[#e3dfda] px-4 py-3">
-        <span className="text-sm font-medium text-brand-700/70">
+    <div className="card overflow-hidden p-0">
+      <div className="table-ribbon flex items-center justify-between gap-3 px-4 py-3">
+        <span className="text-sm font-semibold text-white">
           {selected.size > 0 ? `${selected.size} selected` : `${sets.length} set${sets.length === 1 ? "" : "s"}`}
         </span>
         {selected.size > 0 && (
@@ -68,15 +68,15 @@ export default function SetsTable({ sets }: { sets: SetData[] }) {
             type="button"
             onClick={handleDeleteSelected}
             disabled={pending}
-            className="font-semibold text-red-700 hover:underline disabled:opacity-50"
+            className="font-semibold text-[#ff8a8f] hover:underline disabled:opacity-50"
           >
             {pending ? "Deleting…" : `Delete selected (${selected.size})`}
           </button>
         )}
       </div>
       <table className="w-full min-w-[560px] text-left text-sm">
-        <thead>
-          <tr className="border-b border-[#e3dfda]">
+        <thead className="table-ribbon">
+          <tr>
             <th className="table-head-cell">
               <input
                 ref={selectAllRef}

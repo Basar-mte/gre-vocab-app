@@ -10,9 +10,12 @@ export default async function AdminSetsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="page-title text-2xl text-brand-900 md:text-3xl">Sets &amp; words</h1>
-        <p className="mt-1 text-brand-700/70">Create sets (1–30 or however many you need) and manage their words.</p>
+      <div className="hero-band p-6 md:p-8">
+        <div className="relative">
+          <div className="hero-rule mb-3" />
+          <h1 className="page-title text-2xl md:text-3xl">Sets &amp; words</h1>
+          <p className="mt-1 text-[#c9c5c1]">Create sets (1–30 or however many you need) and manage their words.</p>
+        </div>
       </div>
 
       <div className="card p-6">

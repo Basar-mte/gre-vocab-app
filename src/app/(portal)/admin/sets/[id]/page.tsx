@@ -17,15 +17,16 @@ export default async function AdminSetDetailPage({ params }: { params: Promise<{
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <Link href="/admin/sets" className="text-sm font-semibold text-brand-700 hover:underline">
+      <div className="hero-band p-6 md:p-8">
+        <div className="relative">
+          <Link href="/admin/sets" className="text-sm font-semibold text-[#f0d9d9] hover:underline">
             ← All sets
           </Link>
-          <h1 className="page-title mt-1 text-2xl text-brand-900 md:text-3xl">
+          <div className="hero-rule my-3" />
+          <h1 className="page-title text-2xl md:text-3xl">
             Set {set.number} · {set.title}
           </h1>
-          <p className="mt-1 text-brand-700/70">{set.words.length} words</p>
+          <p className="mt-1 text-[#c9c5c1]">{set.words.length} words</p>
         </div>
       </div>
 
