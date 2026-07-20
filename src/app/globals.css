@@ -363,6 +363,12 @@ body {
   color: #b5b0ab;
 }
 
+.study-speak-corner {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
 .study-word {
   font-family: var(--font-serif), Georgia, serif;
   font-weight: 700;

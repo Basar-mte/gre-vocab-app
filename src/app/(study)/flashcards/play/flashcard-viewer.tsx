@@ -284,14 +284,14 @@ export default function FlashcardViewer({
               >
                 <div className="study-face front items-center justify-center px-[40px] py-16 text-center">
                   <span className="study-tab">#{serialMap.get(current.id)}</span>
+                  <div className="study-speak-corner">
+                    <SpeakerButton term={current.term} />
+                  </div>
                   <div>
                     <div className="mx-auto mb-[22px] h-[3px] w-[54px] bg-[color:var(--color-brand-500)]" />
-                    <div className="flex items-center justify-center gap-3">
-                      <div className="study-word text-[clamp(48px,9vw,84px)]">{current.term}</div>
-                      <SpeakerButton term={current.term} />
-                    </div>
+                    <div className="study-word text-[clamp(48px,9vw,84px)]">{current.term}</div>
                     <div className="mt-4 text-[13px] uppercase tracking-[.2em] text-[#6e6a66]">
-                      Set {current.setNumber} &middot; {current.setTitle}
+                      {current.setTitle}
                     </div>
                   </div>
                   <span className="study-hint">Tap to reveal</span>
@@ -299,10 +299,10 @@ export default function FlashcardViewer({
 
                 <div className="study-face back overflow-y-auto px-[40px] pb-[48px] pt-[56px]">
                   <span className="study-tab">#{serialMap.get(current.id)}</span>
-                  <div className="mb-4 flex items-center gap-2">
-                    <div className="study-word text-3xl">{current.term}</div>
+                  <div className="study-speak-corner">
                     <SpeakerButton term={current.term} size="sm" />
                   </div>
+                  <div className="study-word mb-4 text-3xl">{current.term}</div>
 
                   <div className="mb-4">
                     <span className="study-eyebrow">Meaning</span>
