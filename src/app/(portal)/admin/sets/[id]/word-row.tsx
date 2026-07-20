@@ -82,11 +82,11 @@ export default function WordRow({
   }
 
   return (
-    <tr className={`border-b border-brand-50 last:border-0 hover:bg-brand-50/40 ${selected ? "bg-brand-50/60" : ""}`}>
+    <tr className={`border-b border-[#f1eeea] last:border-0 hover:bg-[#f9f7f6] ${selected ? "bg-brand-50/60" : ""}`}>
       <td className="px-4 py-3">
         <input
           type="checkbox"
-          className="h-4 w-4 accent-brand-600"
+          className="h-4 w-4 accent-[#D32C32]"
           checked={selected}
           onChange={() => onToggleSelected(word.id)}
           aria-label={`Select ${word.term}`}

@@ -11,7 +11,7 @@ export default async function AdminSetsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-brand-900">Sets &amp; words</h1>
+        <h1 className="page-title text-2xl text-brand-900 md:text-3xl">Sets &amp; words</h1>
         <p className="mt-1 text-brand-700/70">Create sets (1–30 or however many you need) and manage their words.</p>
       </div>
 

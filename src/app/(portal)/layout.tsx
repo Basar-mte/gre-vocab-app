@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { requireUser } from "@/lib/session";
 import TopNav from "@/components/top-nav";
 
@@ -5,11 +6,14 @@ export default async function PortalLayout({ children }: { children: React.React
   const user = await requireUser();
 
   return (
-    <div className="flex min-h-screen flex-col bg-[radial-gradient(circle_at_top,_#fff5f5,_#fffaf9_55%)]">
+    <div className="flex min-h-dvh flex-col bg-[#f5f5f5]">
       <TopNav user={user} />
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">{children}</main>
-      <footer className="border-t border-brand-100 py-4 text-center text-xs text-brand-700/60">
-        GREasy
+      <main className="mx-auto w-full max-w-[1280px] flex-1 px-6 py-6">{children}</main>
+      <footer className="border-t border-[#e3dfda] px-6 py-4 text-center text-[12px] tracking-[.04em] text-[#8a8480]">
+        <b className="text-[#D32C32]">GREasy</b> &middot;{" "}
+        <Link href="/about" className="hover:underline">
+          About &amp; contact
+        </Link>
       </footer>
     </div>
   );

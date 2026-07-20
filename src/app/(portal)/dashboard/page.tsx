@@ -18,7 +18,7 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-brand-900">Welcome back, {user.name?.split(" ")[0]}</h1>
+        <h1 className="page-title text-2xl text-brand-900 md:text-3xl">Welcome back, {user.name?.split(" ")[0]}</h1>
         <p className="mt-1 text-brand-700/70">
           {setCount} sets · {wordCount} words available to practice.
         </p>
@@ -63,17 +63,17 @@ export default async function DashboardPage() {
           <div className="overflow-x-auto">
             <table className="w-full min-w-[480px] text-left text-sm">
               <thead>
-                <tr className="border-b border-brand-100 text-brand-700/70">
-                  <th className="py-2 pr-4 font-medium">Date</th>
-                  <th className="py-2 pr-4 font-medium">Sets</th>
-                  <th className="py-2 pr-4 font-medium">Questions</th>
-                  <th className="py-2 pr-4 font-medium">Score</th>
-                  <th className="py-2 font-medium" />
+                <tr className="border-b border-[#e3dfda]">
+                  <th className="table-head-cell !pl-0">Date</th>
+                  <th className="table-head-cell">Sets</th>
+                  <th className="table-head-cell">Questions</th>
+                  <th className="table-head-cell">Score</th>
+                  <th className="table-head-cell" />
                 </tr>
               </thead>
               <tbody>
                 {recentAttempts.map((attempt) => (
-                  <tr key={attempt.id} className="border-b border-brand-50 last:border-0">
+                  <tr key={attempt.id} className="border-b border-[#f1eeea] last:border-0 hover:bg-[#f9f7f6]">
                     <td className="py-2 pr-4">{attempt.completedAt?.toLocaleDateString()}</td>
                     <td className="py-2 pr-4">{JSON.parse(attempt.setNumbers).join(", ")}</td>
                     <td className="py-2 pr-4">{attempt.totalQuestions}</td>
@@ -108,10 +108,13 @@ function ActionCard({
   cta: string;
 }) {
   return (
-    <Link href={href} className="card flex flex-col gap-2 p-5 transition hover:border-brand-400 hover:shadow-md">
+    <Link
+      href={href}
+      className="card flex flex-col gap-2 p-5 transition hover:-translate-y-0.5 hover:border-[#D32C32] hover:shadow-md"
+    >
       <h3 className="font-semibold text-brand-900">{title}</h3>
       <p className="flex-1 text-sm text-brand-700/70">{description}</p>
-      <span className="text-sm font-semibold text-brand-700">{cta} →</span>
+      <span className="text-sm font-semibold text-[#D32C32]">{cta} →</span>
     </Link>
   );
 }

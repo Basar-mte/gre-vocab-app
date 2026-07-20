@@ -14,7 +14,7 @@ export default async function HistoryPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-brand-900">Exam history</h1>
+        <h1 className="page-title text-2xl text-brand-900 md:text-3xl">Exam history</h1>
         <p className="mt-1 text-brand-700/70">All of your completed exam attempts.</p>
       </div>
 
@@ -30,18 +30,18 @@ export default async function HistoryPage() {
         ) : (
           <table className="w-full min-w-[560px] text-left text-sm">
             <thead>
-              <tr className="border-b border-brand-100 text-brand-700/70">
-                <th className="px-4 py-3 font-medium">Date</th>
-                <th className="px-4 py-3 font-medium">Sets</th>
-                <th className="px-4 py-3 font-medium">Direction</th>
-                <th className="px-4 py-3 font-medium">Style</th>
-                <th className="px-4 py-3 font-medium">Score</th>
-                <th className="px-4 py-3 font-medium" />
+              <tr className="border-b border-[#e3dfda]">
+                <th className="table-head-cell">Date</th>
+                <th className="table-head-cell">Sets</th>
+                <th className="table-head-cell">Direction</th>
+                <th className="table-head-cell">Style</th>
+                <th className="table-head-cell">Score</th>
+                <th className="table-head-cell" />
               </tr>
             </thead>
             <tbody>
               {attempts.map((attempt) => (
-                <tr key={attempt.id} className="border-b border-brand-50 last:border-0 hover:bg-brand-50/40">
+                <tr key={attempt.id} className="border-b border-[#f1eeea] last:border-0 hover:bg-[#f9f7f6]">
                   <td className="px-4 py-3">{attempt.completedAt?.toLocaleString()}</td>
                   <td className="px-4 py-3">{JSON.parse(attempt.setNumbers).join(", ")}</td>
                   <td className="px-4 py-3">{formatDirection(attempt.direction)}</td>

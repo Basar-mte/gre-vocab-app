@@ -194,7 +194,7 @@ export default function FlashcardViewer({
         </div>
       </header>
 
-      <main className="mx-auto flex w-full min-h-0 max-w-[1180px] flex-1 flex-col items-center justify-center overflow-y-auto px-6 pb-8 pt-6">
+      <main className="mx-auto flex h-full w-full min-h-0 max-w-[1180px] flex-col items-center overflow-y-auto px-6 pb-6 pt-6">
         <div className="mb-[18px] flex w-full max-w-[820px] items-center gap-3.5">
           <span className="whitespace-nowrap text-[14.5px] font-semibold text-[#6e6a66]">
             <b className="text-[color:var(--color-ink)]">{empty ? 0 : pos + 1}</b> / {order.length}
@@ -216,7 +216,7 @@ export default function FlashcardViewer({
           </div>
         ) : (
           <>
-            <div className="study-scene min-h-[420px] w-full max-w-[820px] flex-1 lg:min-h-[min(60dvh,660px)]">
+            <div className="study-scene min-h-[380px] w-full max-w-[820px] flex-1">
               <div
                 className={`study-cardflip h-full min-h-[420px] w-full ${flipped ? "flipped" : ""}`}
                 role="button"

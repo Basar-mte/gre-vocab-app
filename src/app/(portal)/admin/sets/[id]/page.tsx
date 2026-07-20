@@ -22,7 +22,7 @@ export default async function AdminSetDetailPage({ params }: { params: Promise<{
           <Link href="/admin/sets" className="text-sm font-semibold text-brand-700 hover:underline">
             ← All sets
           </Link>
-          <h1 className="mt-1 text-2xl font-bold text-brand-900">
+          <h1 className="page-title mt-1 text-2xl text-brand-900 md:text-3xl">
             Set {set.number} · {set.title}
           </h1>
           <p className="mt-1 text-brand-700/70">{set.words.length} words</p>

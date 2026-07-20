@@ -18,7 +18,7 @@ export default async function AdminOverviewPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-brand-900">Admin overview</h1>
+        <h1 className="page-title text-2xl text-brand-900 md:text-3xl">Admin overview</h1>
         <p className="mt-1 text-brand-700/70">Manage sets, words, users, and review activity.</p>
       </div>
 
@@ -41,20 +41,20 @@ export default async function AdminOverviewPage() {
         ) : (
           <table className="w-full min-w-[520px] text-left text-sm">
             <thead>
-              <tr className="border-b border-brand-100 text-brand-700/70">
-                <th className="py-2 pr-4 font-medium">Student</th>
-                <th className="py-2 pr-4 font-medium">Date</th>
-                <th className="py-2 pr-4 font-medium">Sets</th>
-                <th className="py-2 font-medium">Score</th>
+              <tr className="border-b border-[#e3dfda]">
+                <th className="table-head-cell">Student</th>
+                <th className="table-head-cell">Date</th>
+                <th className="table-head-cell">Sets</th>
+                <th className="table-head-cell">Score</th>
               </tr>
             </thead>
             <tbody>
               {recentAttempts.map((a) => (
-                <tr key={a.id} className="border-b border-brand-50 last:border-0">
-                  <td className="py-2 pr-4">{a.user.name}</td>
-                  <td className="py-2 pr-4">{a.completedAt?.toLocaleDateString()}</td>
-                  <td className="py-2 pr-4">{JSON.parse(a.setNumbers).join(", ")}</td>
-                  <td className="py-2 font-semibold text-brand-800">
+                <tr key={a.id} className="border-b border-[#f1eeea] last:border-0 hover:bg-[#f9f7f6]">
+                  <td className="px-4 py-2.5">{a.user.name}</td>
+                  <td className="px-4 py-2.5">{a.completedAt?.toLocaleDateString()}</td>
+                  <td className="px-4 py-2.5">{JSON.parse(a.setNumbers).join(", ")}</td>
+                  <td className="px-4 py-2.5 font-semibold text-brand-800">
                     {a.correctCount}/{a.totalQuestions} ({Math.round(a.scorePercent)}%)
                   </td>
                 </tr>

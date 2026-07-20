@@ -55,7 +55,7 @@ export default function WordsTable({ setId, words }: { setId: string; words: Wor
 
   return (
     <div className="card overflow-x-auto p-0">
-      <div className="flex items-center justify-between gap-3 border-b border-brand-100 px-4 py-3">
+      <div className="flex items-center justify-between gap-3 border-b border-[#e3dfda] px-4 py-3">
         <span className="text-sm font-medium text-brand-700/70">
           {selected.size > 0 ? `${selected.size} selected` : `${words.length} word${words.length === 1 ? "" : "s"}`}
         </span>
@@ -72,21 +72,21 @@ export default function WordsTable({ setId, words }: { setId: string; words: Wor
       </div>
       <table className="w-full min-w-[760px] text-left text-sm">
         <thead>
-          <tr className="border-b border-brand-100 text-brand-700/70">
-            <th className="px-4 py-3 font-medium">
+          <tr className="border-b border-[#e3dfda]">
+            <th className="table-head-cell">
               <input
                 ref={selectAllRef}
                 type="checkbox"
-                className="h-4 w-4 accent-brand-600"
+                className="h-4 w-4 accent-[#D32C32]"
                 checked={allSelected}
                 onChange={toggleAll}
                 aria-label="Select all words"
               />
             </th>
-            <th className="px-4 py-3 font-medium">Term</th>
-            <th className="px-4 py-3 font-medium">Meaning</th>
-            <th className="px-4 py-3 font-medium">Part of speech</th>
-            <th className="px-4 py-3 font-medium" />
+            <th className="table-head-cell">Term</th>
+            <th className="table-head-cell">Meaning</th>
+            <th className="table-head-cell">Part of speech</th>
+            <th className="table-head-cell" />
           </tr>
         </thead>
         <tbody>

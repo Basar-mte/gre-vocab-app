@@ -16,7 +16,7 @@ export default async function ExamSetupPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-brand-900">Take an exam</h1>
+        <h1 className="page-title text-2xl text-brand-900 md:text-3xl">Take an exam</h1>
         <p className="mt-1 text-brand-700/70">
           Combine any sets or a range, choose how many words, and pick a question style.
         </p>

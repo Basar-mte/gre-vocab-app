@@ -4,7 +4,7 @@ export default function AdminImportPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-brand-900">CSV import</h1>
+        <h1 className="page-title text-2xl text-brand-900 md:text-3xl">CSV import</h1>
         <p className="mt-1 text-brand-700/70">
           Bring in your real word sets in bulk. Sets are created automatically if the number doesn&apos;t exist yet.
         </p>

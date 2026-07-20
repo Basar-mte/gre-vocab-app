@@ -12,17 +12,15 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   await requireAdmin();
 
   return (
-    <div className="grid gap-6 md:grid-cols-[200px_1fr]">
+    <div className="grid gap-5 md:grid-cols-[220px_1fr]">
       <aside className="card h-fit p-3">
-        <p className="mb-2 px-2 text-xs font-semibold uppercase tracking-wide text-brand-700/60">
-          Admin portal
-        </p>
-        <nav className="flex flex-col gap-1">
+        <p className="table-head-cell !p-0 !pb-2 !pl-2">Admin portal</p>
+        <nav className="flex flex-col gap-0.5">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-brand-800 hover:bg-brand-50"
+              className="rounded-md px-3 py-2 text-sm font-semibold text-brand-900 transition-colors hover:bg-[#f5f5f5]"
             >
               {link.label}
             </Link>
