@@ -22,6 +22,7 @@ type AvailableSet = {
 };
 
 const MULTI_VALUE = "__multi";
+const RANDOM_VALUE = "__random";
 
 function shuffleArr<T>(arr: T[]): T[] {
   const a = [...arr];
@@ -36,10 +37,12 @@ export default function FlashcardViewer({
   words,
   setNumbers,
   availableSets,
+  randomMix = false,
 }: {
   words: FlashWord[];
   setNumbers: number[];
   availableSets: AvailableSet[];
+  randomMix?: boolean;
 }) {
   const router = useRouter();
   const [order, setOrder] = useState<FlashWord[]>(words);
@@ -118,7 +121,7 @@ export default function FlashcardViewer({
   }
 
   function handleSetChange(value: string) {
-    if (!value || value === MULTI_VALUE) return;
+    if (!value || value === MULTI_VALUE || value === RANDOM_VALUE) return;
     router.push(`/flashcards/play?sets=${value}`);
   }
 
@@ -145,17 +148,17 @@ export default function FlashcardViewer({
         .filter(Boolean)
     : [];
 
-  const setLabel = `Set${setNumbers.length > 1 ? "s" : ""} ${setNumbers.join(", ")}`;
-  const dropdownValue = setNumbers.length === 1 ? String(setNumbers[0]) : MULTI_VALUE;
+  const setLabel = randomMix ? "Random mix" : `Set${setNumbers.length > 1 ? "s" : ""} ${setNumbers.join(", ")}`;
+  const dropdownValue = randomMix ? RANDOM_VALUE : setNumbers.length === 1 ? String(setNumbers[0]) : MULTI_VALUE;
 
   return (
     <>
       <header className="study-header">
         <div className="study-brandmark" aria-hidden="true">
-          K
+          GE
         </div>
         <div className="mr-auto leading-[1.15]">
-          <h1 className="font-serif text-xl font-bold tracking-[.2px]">GRE Vocabulary Flashcards</h1>
+          <h1 className="font-serif text-xl font-bold tracking-[.2px]">GREasy Flashcards</h1>
           <span className="text-[12.5px] uppercase tracking-[.14em] text-[#c9c5c1]">
             Goldmine &middot; Word &middot; Mnemonic &middot; Meaning
           </span>
@@ -167,6 +170,11 @@ export default function FlashcardViewer({
             value={dropdownValue}
             onChange={(e) => handleSetChange(e.target.value)}
           >
+            {randomMix && (
+              <option value={RANDOM_VALUE} disabled>
+                Random mix ({words.length} words)
+              </option>
+            )}
             {dropdownValue === MULTI_VALUE && (
               <option value={MULTI_VALUE} disabled>
                 {setLabel} (custom)

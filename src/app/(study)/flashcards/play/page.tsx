@@ -9,25 +9,28 @@ export default async function FlashcardsPlayPage({
   searchParams: Promise<{ sets?: string; shuffle?: string; count?: string }>;
 }) {
   const params = await searchParams;
-  const setNumbers = (params.sets ?? "")
-    .split(",")
-    .map((n) => parseInt(n, 10))
-    .filter((n) => !Number.isNaN(n));
+  const randomMix = params.sets?.trim().toLowerCase() === "all";
+  const setNumbers = randomMix
+    ? []
+    : (params.sets ?? "")
+        .split(",")
+        .map((n) => parseInt(n, 10))
+        .filter((n) => !Number.isNaN(n));
 
-  if (setNumbers.length === 0) {
+  if (!randomMix && setNumbers.length === 0) {
     return <EmptyState message="No sets selected." />;
   }
 
   const shuffle = params.shuffle !== "false";
 
   const words = await prisma.word.findMany({
-    where: { set: { number: { in: setNumbers } } },
+    where: randomMix ? {} : { set: { number: { in: setNumbers } } },
     orderBy: [{ set: { number: "asc" } }, { term: "asc" }],
     include: { set: { select: { number: true, title: true } } },
   });
 
   if (words.length === 0) {
-    return <EmptyState message="The selected sets don't have any words yet." />;
+    return <EmptyState message={randomMix ? "There are no words in the bank yet." : "The selected sets don't have any words yet."} />;
   }
 
   const count = params.count ? parseInt(params.count, 10) : words.length;
@@ -51,6 +54,7 @@ export default async function FlashcardsPlayPage({
         setTitle: w.set.title,
       }))}
       setNumbers={setNumbers}
+      randomMix={randomMix}
       availableSets={sets.map((s) => ({ number: s.number, title: s.title, wordCount: s._count.words }))}
     />
   );
