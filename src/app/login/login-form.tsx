@@ -40,12 +40,6 @@ export default function LoginForm({ callbackUrl }: { callbackUrl?: string }) {
       <button type="submit" disabled={pending} className="btn btn-primary w-full">
         {pending ? "Signing in…" : "Sign in"}
       </button>
-
-      <div className="rounded-lg border border-dashed border-brand-200 bg-brand-50/60 p-3 text-xs text-brand-700/80">
-        <p className="font-semibold">Demo accounts</p>
-        <p>Admin: admin@greasy.app / admin1234</p>
-        <p>Student: student@greasy.app / student1234</p>
-      </div>
     </form>
   );
 }

@@ -10,13 +10,13 @@ export default async function LoginPage({
 
   return (
     <div className="flex min-h-dvh flex-col md:flex-row">
-      <div className="hero-band flex flex-1 flex-col justify-center px-8 py-16 md:px-14">
-        <div className="relative max-w-sm">
-          <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#D32C32] text-xl font-bold text-white">
+      <div className="hero-band flex flex-1 flex-col items-center justify-center px-8 py-16 text-center md:px-14">
+        <div className="relative flex max-w-sm flex-col items-center">
+          <span className="flex h-24 w-24 items-center justify-center rounded-2xl bg-[#D32C32] text-4xl font-bold text-white shadow-lg md:h-28 md:w-28 md:text-5xl">
             GE
           </span>
-          <div className="hero-rule my-5" />
-          <h1 className="page-title text-3xl md:text-4xl">GREasy</h1>
+          <div className="hero-rule my-6" />
+          <h1 className="page-title text-4xl md:text-5xl">GREasy</h1>
           <p className="mt-3 text-[#c9c5c1]">
             Flashcards, mnemonics, and exams built from one focused GRE vocabulary bank — study fast, remember
             longer.
