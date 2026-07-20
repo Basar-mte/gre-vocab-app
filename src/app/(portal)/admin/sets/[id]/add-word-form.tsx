@@ -28,6 +28,10 @@ export default function AddWordForm({ setId }: { setId: string }) {
         <label className="mb-1 block text-sm font-medium text-brand-900">Meaning</label>
         <input name="meaning" type="text" required className="input" placeholder="e.g. Lasting for a very short time" />
       </div>
+      <div className="sm:col-span-2">
+        <label className="mb-1 block text-sm font-medium text-brand-900">Mnemonic (optional)</label>
+        <input name="mnemonic" type="text" className="input" placeholder="Memory trick — any language" />
+      </div>
       <div>
         <label className="mb-1 block text-sm font-medium text-brand-900">Example (optional)</label>
         <input name="example" type="text" className="input" placeholder="Sentence using the word" />

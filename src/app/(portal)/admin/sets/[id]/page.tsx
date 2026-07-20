@@ -60,6 +60,7 @@ export default async function AdminSetDetailPage({ params }: { params: Promise<{
                     id: word.id,
                     term: word.term,
                     meaning: word.meaning,
+                    mnemonic: word.mnemonic,
                     partOfSpeech: word.partOfSpeech,
                     example: word.example,
                     synonyms: word.synonyms,

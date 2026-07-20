@@ -6,16 +6,37 @@ const prisma = new PrismaClient();
 // Real GRE-level words with accurate definitions written independently for this
 // seed (not extracted from any external source). Clearly labelled as sample
 // data — use the admin CSV importer to load your own 30 real sets.
-const sampleSets: { number: number; title: string; color: string; words: { term: string; meaning: string }[] }[] = [
+const sampleSets: {
+  number: number;
+  title: string;
+  color: string;
+  words: { term: string; meaning: string; mnemonic?: string }[];
+}[] = [
   {
     number: 1,
     title: "Sample Set 1",
     color: "#b91616",
     words: [
-      { term: "Aberration", meaning: "A departure from what is normal or expected; an anomaly." },
-      { term: "Abscond", meaning: "To leave hurriedly and secretly, typically to avoid detection." },
-      { term: "Adulation", meaning: "Excessive or servile flattery; extreme admiration." },
-      { term: "Alacrity", meaning: "Brisk and cheerful readiness or eagerness." },
+      {
+        term: "Aberration",
+        meaning: "A departure from what is normal or expected; an anomaly.",
+        mnemonic: "AB (away) + ERR (error) — a straying away, an error from the norm.",
+      },
+      {
+        term: "Abscond",
+        meaning: "To leave hurriedly and secretly, typically to avoid detection.",
+        mnemonic: "AB (away) + SCOND sounds like 'second' — gone in a split second.",
+      },
+      {
+        term: "Adulation",
+        meaning: "Excessive or servile flattery; extreme admiration.",
+        mnemonic: "ADULT + -ATION — like a fan gushing over an adult celebrity.",
+      },
+      {
+        term: "Alacrity",
+        meaning: "Brisk and cheerful readiness or eagerness.",
+        mnemonic: "A LACK of hesitation — jumping in with cheerful speed.",
+      },
       { term: "Ambiguous", meaning: "Open to more than one interpretation; not clearly defined." },
       { term: "Austere", meaning: "Severe or strict in manner; without comforts or luxuries." },
       { term: "Belie", meaning: "To give a false impression of; to contradict." },
@@ -124,14 +145,16 @@ async function main() {
     });
 
     for (const word of set.words) {
-      const existing = await prisma.word.findFirst({
-        where: { setId: vocabSet.id, term: word.term },
+      await prisma.word.upsert({
+        where: { setId_term: { setId: vocabSet.id, term: word.term } },
+        update: { meaning: word.meaning, mnemonic: word.mnemonic ?? null },
+        create: {
+          setId: vocabSet.id,
+          term: word.term,
+          meaning: word.meaning,
+          mnemonic: word.mnemonic ?? null,
+        },
       });
-      if (!existing) {
-        await prisma.word.create({
-          data: { setId: vocabSet.id, term: word.term, meaning: word.meaning },
-        });
-      }
     }
   }
 

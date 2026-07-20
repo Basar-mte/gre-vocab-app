@@ -16,9 +16,11 @@ export default function AdminImportPage() {
           The first row must be a header. Required columns: <code className="rounded bg-brand-50 px-1">set_number</code>,{" "}
           <code className="rounded bg-brand-50 px-1">term</code>, <code className="rounded bg-brand-50 px-1">meaning</code>.
           Optional columns: <code className="rounded bg-brand-50 px-1">set_title</code>,{" "}
+          <code className="rounded bg-brand-50 px-1">mnemonic</code>,{" "}
           <code className="rounded bg-brand-50 px-1">part_of_speech</code>,{" "}
           <code className="rounded bg-brand-50 px-1">example</code>,{" "}
-          <code className="rounded bg-brand-50 px-1">synonyms</code>.
+          <code className="rounded bg-brand-50 px-1">synonyms</code>. Meaning and mnemonic can be in any language
+          (e.g. Bengali) — they&apos;re stored and displayed as-is.
         </p>
         <p className="mb-3 text-sm text-brand-700/80">
           Re-importing a term that already exists in the same set updates it instead of duplicating it, so you can

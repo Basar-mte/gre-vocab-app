@@ -58,6 +58,7 @@ model Word {
   set           VocabSet @relation(fields: [setId], references: [id], onDelete: Cascade)
   term          String
   meaning       String
+  mnemonic      String?
   partOfSpeech  String?
   example       String?
   synonyms      String?

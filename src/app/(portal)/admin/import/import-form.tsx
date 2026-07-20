@@ -15,6 +15,9 @@ const HEADER_ALIASES: Record<string, keyof ImportRow> = {
   word: "term",
   meaning: "meaning",
   definition: "meaning",
+  mnemonic: "mnemonic",
+  mnemonics: "mnemonic",
+  memory_trick: "mnemonic",
   part_of_speech: "partOfSpeech",
   partofspeech: "partOfSpeech",
   pos: "partOfSpeech",
@@ -130,6 +133,7 @@ export default function ImportForm() {
                   <th className="px-3 py-2">Set #</th>
                   <th className="px-3 py-2">Term</th>
                   <th className="px-3 py-2">Meaning</th>
+                  <th className="px-3 py-2">Mnemonic</th>
                   <th className="px-3 py-2">POS</th>
                 </tr>
               </thead>
@@ -139,6 +143,7 @@ export default function ImportForm() {
                     <td className="px-3 py-2">{row.setNumber}</td>
                     <td className="px-3 py-2 font-medium">{row.term}</td>
                     <td className="px-3 py-2">{row.meaning}</td>
+                    <td className="px-3 py-2">{row.mnemonic ?? "—"}</td>
                     <td className="px-3 py-2">{row.partOfSpeech ?? "—"}</td>
                   </tr>
                 ))}

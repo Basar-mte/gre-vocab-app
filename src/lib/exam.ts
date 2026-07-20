@@ -12,7 +12,7 @@ export function shuffleArray<T>(arr: T[]): T[] {
   return a;
 }
 
-export function pickQuestionWords(allWords: Word[], count: number, shuffle: boolean): Word[] {
+export function pickQuestionWords<T extends Word>(allWords: T[], count: number, shuffle: boolean): T[] {
   const pool = shuffle ? shuffleArray(allWords) : allWords;
   return pool.slice(0, Math.max(0, Math.min(count, pool.length)));
 }

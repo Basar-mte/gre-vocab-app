@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { pickQuestionWords } from "@/lib/exam";
-import FlashcardViewer from "../flashcard-viewer";
+import FlashcardViewer from "./flashcard-viewer";
 
 export default async function FlashcardsPlayPage({
   searchParams,
@@ -23,6 +23,7 @@ export default async function FlashcardsPlayPage({
   const words = await prisma.word.findMany({
     where: { set: { number: { in: setNumbers } } },
     orderBy: [{ set: { number: "asc" } }, { term: "asc" }],
+    include: { set: { select: { number: true, title: true } } },
   });
 
   if (words.length === 0) {
@@ -38,22 +39,26 @@ export default async function FlashcardsPlayPage({
         id: w.id,
         term: w.term,
         meaning: w.meaning,
-        partOfSpeech: w.partOfSpeech,
+        mnemonic: w.mnemonic,
         example: w.example,
+        synonyms: w.synonyms,
+        setNumber: w.set.number,
+        setTitle: w.set.title,
       }))}
       setNumbers={setNumbers}
-      shuffle={shuffle}
     />
   );
 }
 
 function EmptyState({ message }: { message: string }) {
   return (
-    <div className="card mx-auto max-w-md p-8 text-center">
-      <p className="mb-4 text-brand-800">{message}</p>
-      <Link href="/flashcards" className="btn btn-primary">
-        Back to setup
-      </Link>
+    <div className="study-shell flex items-center justify-center p-6">
+      <div className="card max-w-md p-8 text-center">
+        <p className="mb-4 text-brand-800">{message}</p>
+        <Link href="/flashcards" className="btn btn-primary">
+          Back to setup
+        </Link>
+      </div>
     </div>
   );
 }

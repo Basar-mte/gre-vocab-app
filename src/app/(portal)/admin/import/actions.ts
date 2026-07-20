@@ -9,6 +9,7 @@ export type ImportRow = {
   setTitle?: string;
   term: string;
   meaning: string;
+  mnemonic?: string;
   partOfSpeech?: string;
   example?: string;
   synonyms?: string;
@@ -68,6 +69,7 @@ export async function bulkImportWords(rows: ImportRow[]): Promise<ImportSummary>
 
     const data = {
       meaning: row.meaning.trim(),
+      mnemonic: row.mnemonic?.trim() || null,
       partOfSpeech: row.partOfSpeech?.trim() || null,
       example: row.example?.trim() || null,
       synonyms: row.synonyms?.trim() || null,

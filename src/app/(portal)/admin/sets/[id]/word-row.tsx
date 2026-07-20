@@ -8,6 +8,7 @@ type WordData = {
   id: string;
   term: string;
   meaning: string;
+  mnemonic: string | null;
   partOfSpeech: string | null;
   example: string | null;
   synonyms: string | null;
@@ -40,6 +41,10 @@ export default function WordRow({ word }: { word: WordData }) {
             <div className="sm:col-span-2">
               <label className="mb-1 block text-xs font-medium text-brand-900">Meaning</label>
               <input name="meaning" defaultValue={word.meaning} required className="input" />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="mb-1 block text-xs font-medium text-brand-900">Mnemonic</label>
+              <input name="mnemonic" defaultValue={word.mnemonic ?? ""} className="input" />
             </div>
             <div>
               <label className="mb-1 block text-xs font-medium text-brand-900">Example</label>
