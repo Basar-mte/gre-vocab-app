@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type FlashWord = {
   id: string;
@@ -13,6 +14,14 @@ type FlashWord = {
   setNumber: number;
   setTitle: string;
 };
+
+type AvailableSet = {
+  number: number;
+  title: string;
+  wordCount: number;
+};
+
+const MULTI_VALUE = "__multi";
 
 function shuffleArr<T>(arr: T[]): T[] {
   const a = [...arr];
@@ -26,10 +35,13 @@ function shuffleArr<T>(arr: T[]): T[] {
 export default function FlashcardViewer({
   words,
   setNumbers,
+  availableSets,
 }: {
   words: FlashWord[];
   setNumbers: number[];
+  availableSets: AvailableSet[];
 }) {
+  const router = useRouter();
   const [order, setOrder] = useState<FlashWord[]>(words);
   const [pos, setPos] = useState(0);
   const [flipped, setFlipped] = useState(false);
@@ -105,6 +117,11 @@ export default function FlashcardViewer({
     buildOrder(false, known, nextReview);
   }
 
+  function handleSetChange(value: string) {
+    if (!value || value === MULTI_VALUE) return;
+    router.push(`/flashcards/play?sets=${value}`);
+  }
+
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
       const tag = (e.target as HTMLElement)?.tagName;
@@ -129,20 +146,38 @@ export default function FlashcardViewer({
     : [];
 
   const setLabel = `Set${setNumbers.length > 1 ? "s" : ""} ${setNumbers.join(", ")}`;
+  const dropdownValue = setNumbers.length === 1 ? String(setNumbers[0]) : MULTI_VALUE;
 
   return (
     <>
       <header className="study-header">
         <div className="study-brandmark" aria-hidden="true">
-          GE
+          K
         </div>
         <div className="mr-auto leading-[1.15]">
-          <h1 className="font-serif text-lg font-bold tracking-[.2px]">GREasy Flashcards</h1>
+          <h1 className="font-serif text-lg font-bold tracking-[.2px]">GRE Vocabulary Flashcards</h1>
           <span className="text-[11px] uppercase tracking-[.14em] text-[#c9c5c1]">
-            Word &middot; Mnemonic &middot; Meaning
+            Goldmine &middot; Word &middot; Mnemonic &middot; Meaning
           </span>
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          <select
+            className="study-btn"
+            title="Choose set"
+            value={dropdownValue}
+            onChange={(e) => handleSetChange(e.target.value)}
+          >
+            {dropdownValue === MULTI_VALUE && (
+              <option value={MULTI_VALUE} disabled>
+                {setLabel} (custom)
+              </option>
+            )}
+            {availableSets.map((s) => (
+              <option key={s.number} value={s.number}>
+                Set {String(s.number).padStart(2, "0")} ({s.wordCount} words)
+              </option>
+            ))}
+          </select>
           <button className="study-btn" onClick={handleShuffle} title="Shuffle cards in this set">
             Shuffle
           </button>
@@ -159,7 +194,7 @@ export default function FlashcardViewer({
         </div>
       </header>
 
-      <main className="mx-auto flex w-full max-w-[860px] flex-1 flex-col items-center px-4 pb-8 pt-6">
+      <main className="mx-auto flex w-full min-h-0 max-w-[860px] flex-1 flex-col items-center justify-center overflow-y-auto px-4 pb-8 pt-6">
         <div className="mb-[18px] flex w-full items-center gap-3.5">
           <span className="whitespace-nowrap text-[13px] font-semibold text-[#6e6a66]">
             <b className="text-[color:var(--color-ink)]">{empty ? 0 : pos + 1}</b> / {order.length}
@@ -181,9 +216,9 @@ export default function FlashcardViewer({
           </div>
         ) : (
           <>
-            <div className="study-scene min-h-[420px] w-full max-w-[640px]">
+            <div className="study-scene min-h-[420px] w-full max-w-[640px] flex-1 lg:min-h-[min(58dvh,600px)]">
               <div
-                className={`study-cardflip min-h-[420px] w-full ${flipped ? "flipped" : ""}`}
+                className={`study-cardflip h-full min-h-[420px] w-full ${flipped ? "flipped" : ""}`}
                 role="button"
                 tabIndex={0}
                 aria-label="Flashcard. Press Enter or Space to flip."

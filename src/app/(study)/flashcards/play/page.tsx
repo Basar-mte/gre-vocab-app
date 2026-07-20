@@ -33,6 +33,11 @@ export default async function FlashcardsPlayPage({
   const count = params.count ? parseInt(params.count, 10) : words.length;
   const selection = pickQuestionWords(words, count, shuffle);
 
+  const sets = await prisma.vocabSet.findMany({
+    orderBy: { number: "asc" },
+    select: { number: true, title: true, _count: { select: { words: true } } },
+  });
+
   return (
     <FlashcardViewer
       words={selection.map((w) => ({
@@ -46,6 +51,7 @@ export default async function FlashcardsPlayPage({
         setTitle: w.set.title,
       }))}
       setNumbers={setNumbers}
+      availableSets={sets.map((s) => ({ number: s.number, title: s.title, wordCount: s._count.words }))}
     />
   );
 }

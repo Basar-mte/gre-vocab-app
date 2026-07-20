@@ -132,6 +132,8 @@ body {
 
 .study-shell {
   min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
   background: #f5f5f5;
   color: var(--color-ink);
   display: flex;
@@ -172,10 +174,13 @@ body {
   color: #fff;
   padding: 8px 12px;
   cursor: pointer;
-  transition: border-color 0.15s, background-color 0.15s;
+  transition: border-color 0.15s, background-color 0.15s, transform 0.1s ease;
 }
 .study-header .study-btn:hover:not(:disabled) {
   border-color: var(--color-brand-500);
+}
+.study-header .study-btn:active:not(:disabled) {
+  transform: scale(0.96);
 }
 .study-header .study-btn.active {
   background: var(--color-brand-500);
@@ -208,8 +213,17 @@ body {
   transition: transform 0.55s cubic-bezier(0.4, 0.1, 0.2, 1);
   cursor: pointer;
 }
+.study-cardflip:hover {
+  transform: rotateY(0deg) scale(1.012);
+}
 .study-cardflip.flipped {
   transform: rotateY(180deg);
+}
+.study-cardflip.flipped:hover {
+  transform: rotateY(180deg) scale(1.012);
+}
+.study-cardflip:active {
+  transition-duration: 0.15s;
 }
 .study-face {
   position: absolute;
@@ -223,6 +237,10 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  transition: box-shadow 0.25s ease;
+}
+.study-cardflip:hover .study-face {
+  box-shadow: 0 20px 44px rgba(17, 17, 17, 0.16);
 }
 .study-face.back {
   transform: rotateY(180deg);
@@ -313,11 +331,16 @@ body {
   border-radius: 8px;
   padding: 12px 22px;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.15s, color 0.15s, transform 0.1s ease, box-shadow 0.15s ease;
 }
 .study-navbtn:hover:not(:disabled) {
   background: var(--color-ink);
   color: #fff;
+  box-shadow: 0 4px 10px rgba(17, 17, 17, 0.15);
+}
+.study-navbtn:active:not(:disabled) {
+  transform: scale(0.96);
+  box-shadow: none;
 }
 .study-navbtn:disabled {
   opacity: 0.4;
@@ -342,7 +365,10 @@ body {
   background: #ffffff;
   border: 1px solid #e3dfda;
   color: #6e6a66;
-  transition: all 0.15s;
+  transition: all 0.15s, transform 0.1s ease;
+}
+.study-markbtn:active {
+  transform: scale(0.96);
 }
 .study-markbtn.know:hover,
 .study-markbtn.know.on {
