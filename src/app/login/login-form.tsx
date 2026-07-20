@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import Link from "next/link";
 import { loginAction, type LoginState } from "./actions";
 
 const initialState: LoginState = {};
@@ -27,9 +28,14 @@ export default function LoginForm({ callbackUrl }: { callbackUrl?: string }) {
       </div>
 
       <div>
-        <label htmlFor="password" className="mb-1 block text-sm font-medium text-brand-900">
-          Password
-        </label>
+        <div className="mb-1 flex items-center justify-between">
+          <label htmlFor="password" className="block text-sm font-medium text-brand-900">
+            Password
+          </label>
+          <Link href="/forgot-password" className="text-xs font-semibold text-brand-700 hover:underline">
+            Forgot password?
+          </Link>
+        </div>
         <input id="password" name="password" type="password" required className="input" />
       </div>
 

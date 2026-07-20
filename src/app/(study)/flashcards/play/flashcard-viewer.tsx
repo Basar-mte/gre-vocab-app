@@ -33,6 +33,50 @@ function shuffleArr<T>(arr: T[]): T[] {
   return a;
 }
 
+function speakWord(term: string) {
+  if (typeof window === "undefined" || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(term);
+  utterance.lang = "en-US";
+  utterance.rate = 0.9;
+  window.speechSynthesis.speak(utterance);
+}
+
+function SpeakerButton({ term, size = "md" }: { term: string; size?: "md" | "sm" }) {
+  return (
+    <button
+      type="button"
+      onClick={(e) => {
+        e.stopPropagation();
+        speakWord(term);
+      }}
+      className={`study-speak-btn ${size === "sm" ? "study-speak-btn-sm" : ""}`}
+      aria-label={`Pronounce ${term}`}
+      title="Pronounce this word"
+    >
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path
+          d="M4 9v6h4l5 5V4L8 9H4z"
+          fill="currentColor"
+        />
+        <path
+          d="M16.5 8.5a5 5 0 0 1 0 7"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
+        <path
+          d="M19 6a8.5 8.5 0 0 1 0 12"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          opacity="0.6"
+        />
+      </svg>
+    </button>
+  );
+}
+
 export default function FlashcardViewer({
   words,
   setNumbers,
@@ -242,7 +286,10 @@ export default function FlashcardViewer({
                   <span className="study-tab">#{serialMap.get(current.id)}</span>
                   <div>
                     <div className="mx-auto mb-[22px] h-[3px] w-[54px] bg-[color:var(--color-brand-500)]" />
-                    <div className="study-word text-[clamp(48px,9vw,84px)]">{current.term}</div>
+                    <div className="flex items-center justify-center gap-3">
+                      <div className="study-word text-[clamp(48px,9vw,84px)]">{current.term}</div>
+                      <SpeakerButton term={current.term} />
+                    </div>
                     <div className="mt-4 text-[13px] uppercase tracking-[.2em] text-[#6e6a66]">
                       Set {current.setNumber} &middot; {current.setTitle}
                     </div>
@@ -252,7 +299,10 @@ export default function FlashcardViewer({
 
                 <div className="study-face back overflow-y-auto px-[40px] pb-[48px] pt-[56px]">
                   <span className="study-tab">#{serialMap.get(current.id)}</span>
-                  <div className="study-word mb-4 text-3xl">{current.term}</div>
+                  <div className="mb-4 flex items-center gap-2">
+                    <div className="study-word text-3xl">{current.term}</div>
+                    <SpeakerButton term={current.term} size="sm" />
+                  </div>
 
                   <div className="mb-4">
                     <span className="study-eyebrow">Meaning</span>

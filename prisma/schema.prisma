@@ -30,13 +30,27 @@ enum ExamFormat {
 }
 
 model User {
-  id           String        @id @default(cuid())
-  name         String
-  email        String        @unique
-  passwordHash String
-  role         Role          @default(STUDENT)
-  createdAt    DateTime      @default(now())
-  attempts     ExamAttempt[]
+  id                 String              @id @default(cuid())
+  name               String
+  email              String              @unique
+  passwordHash       String
+  role               Role                @default(STUDENT)
+  isGuest            Boolean             @default(false)
+  createdAt          DateTime            @default(now())
+  attempts           ExamAttempt[]
+  passwordResetTokens PasswordResetToken[]
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String   @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
 }
 
 model VocabSet {

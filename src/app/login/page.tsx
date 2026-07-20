@@ -1,10 +1,11 @@
 import Link from "next/link";
 import LoginForm from "./login-form";
+import GuestLoginForm from "./guest-login-form";
 
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ callbackUrl?: string; registered?: string }>;
+  searchParams: Promise<{ callbackUrl?: string; registered?: string; reset?: string }>;
 }) {
   const params = await searchParams;
 
@@ -35,7 +36,22 @@ export default async function LoginPage({
                 Account created. You can sign in now.
               </p>
             )}
+            {params.reset && (
+              <p className="mb-4 rounded-lg bg-green-50 px-3 py-2 text-sm text-green-700">
+                Password updated. Sign in with your new password.
+              </p>
+            )}
             <LoginForm callbackUrl={params.callbackUrl} />
+          </div>
+
+          <div className="my-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-wide text-brand-700/50">
+            <div className="h-px flex-1 bg-[#e3dfda]" />
+            or
+            <div className="h-px flex-1 bg-[#e3dfda]" />
+          </div>
+
+          <div className="card p-6">
+            <GuestLoginForm callbackUrl={params.callbackUrl} />
           </div>
 
           <p className="mt-6 text-center text-sm text-brand-700/80">
