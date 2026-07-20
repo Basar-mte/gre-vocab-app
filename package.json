@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "db:seed": "tsx prisma/seed.ts",
+    "db:import-goldmine": "tsx prisma/import-goldmine.ts",
     "db:studio": "prisma studio"
   },
   "prisma": {
